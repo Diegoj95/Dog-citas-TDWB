@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('perro', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre')->unique();
-            $table->string('url_foto')->unique();
+            $table->string('nombre');
+            $table->string('url_foto');
             $table->string('descripcion');
             $table->timestamps();
         });
