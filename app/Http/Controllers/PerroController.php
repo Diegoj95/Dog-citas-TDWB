@@ -23,8 +23,8 @@ class PerroController extends Controller
         return $this->perroRepository->actualizarPerro($request);
      }
 
-     public function listarPerros(Request $request){
-        return $this->perroRepository->listarPerros($request);
+     public function listarAllPerros(Request $request){
+        return $this->perroRepository->listarAllPerros($request);
      }
 
      public function EliminarPerro(ListarPerroRequest $request){

@@ -17,6 +17,7 @@ class PerroRequest extends FormRequest
     public function rules()
     {
         return [
+            'id' => 'exists:perro,id|integer',
             'nombre' => 'required',
             'url_foto' => 'required|url',
             'descripcion' => 'required',
