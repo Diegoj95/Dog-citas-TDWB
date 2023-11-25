@@ -18,9 +18,9 @@ class PerroRequest extends FormRequest
     {
         return [
             'id' => 'exists:perro,id|integer',
-            'nombre' => 'required',
-            'url_foto' => 'required|url',
-            'descripcion' => 'required',
+            'nombre' => 'string|nullable',
+            'url_foto' => 'url|nullable',
+            'descripcion' => 'string|nullable',
         ];
     }
 

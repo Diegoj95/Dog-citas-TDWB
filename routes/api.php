@@ -16,3 +16,6 @@ use App\Http\Controllers\PerroController;
 
 Route::post('registrarPerro',[PerroController::class, 'registrarPerro']);
 Route::get('listarAllPerros',[PerroController::class, 'listarAllPerros']);
+Route::put('actualizarPerro',[PerroController::class, 'actualizarPerro']);
+Route::delete('eliminarPerro',[PerroController::class, 'eliminarPerro']);
+Route::get('listarUnPerro',[PerroController::class, 'listarUnPerro']);
