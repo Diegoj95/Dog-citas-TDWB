@@ -148,6 +148,33 @@ class PerroRepository
             ], Response::HTTP_BAD_REQUEST);
         }
     }
+
+    public function perrosCandidatos($request){
+        try {
+            // Get the ID of the interested dog
+            $interesadoId = $request->input('id');
+    
+            // Retrieve candidate dogs excluding the interested one
+            $perrosCandidatos = Perro::where('id', '!=', $interesadoId)->get();
+    
+            return response()->json(["perrosCandidatos" => $perrosCandidatos], Response::HTTP_OK);
+        } catch (Exception $e) {
+            Log::info([
+                "error" => $e->getMessage(),
+                "linea" => $e->getLine(),
+                "file" => $e->getFile(),
+                "metodo" => __METHOD__
+            ]);
+    
+            return response()->json([
+                "error" => $e->getMessage(),
+                "linea" => $e->getLine(),
+                "file" => $e->getFile(),
+                "metodo" => __METHOD__
+            ], Response::HTTP_BAD_REQUEST);
+        }
+    }
+    
     
 
 }

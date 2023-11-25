@@ -20,3 +20,5 @@ Route::put('actualizarPerro',[PerroController::class, 'actualizarPerro']);
 Route::delete('eliminarPerro',[PerroController::class, 'eliminarPerro']);
 Route::get('listarUnPerro',[PerroController::class, 'listarUnPerro']);
 Route::get('perroRandom',[PerroController::class, 'perroRandom']);
+Route::get('perrosCandidatos',[PerroController::class, 'perrosCandidatos']);
+
