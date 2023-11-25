@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Perro;
+use App\Models\Interaccion;
 use Exception;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
@@ -151,10 +152,8 @@ class PerroRepository
 
     public function perrosCandidatos($request){
         try {
-            // Get the ID of the interested dog
             $interesadoId = $request->input('id');
     
-            // Retrieve candidate dogs excluding the interested one
             $perrosCandidatos = Perro::where('id', '!=', $interesadoId)->get();
     
             return response()->json(["perrosCandidatos" => $perrosCandidatos], Response::HTTP_OK);
@@ -166,6 +165,26 @@ class PerroRepository
                 "metodo" => __METHOD__
             ]);
     
+            return response()->json([
+                "error" => $e->getMessage(),
+                "linea" => $e->getLine(),
+                "file" => $e->getFile(),
+                "metodo" => __METHOD__
+            ], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    public function registrarInteraccion($request)
+    {
+        try {
+            $interaccion = new Interaccion();
+            $interaccion->perro_interesado_id = $request->perro_interesado_id;
+            $interaccion->perro_candidato_id = $request->perro_candidato_id;
+            $interaccion->preferencia = $request->preferencia;
+            $interaccion->save();
+
+            return response()->json(["interaccion" => $interaccion], Response::HTTP_OK);
+        } catch (\Exception $e) {
             return response()->json([
                 "error" => $e->getMessage(),
                 "linea" => $e->getLine(),

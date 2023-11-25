@@ -10,18 +10,18 @@ class Interaccion extends Model
     use HasFactory;
     protected $table = 'interaccion';
 
-    protected $fillable = ['perro_interesado', 'perro_candidato', 'preferencia'];
+    protected $fillable = ['perro_interesado_id', 'perro_candidato_id', 'preferencia'];
 
 
     public function perroInteresado()
     {
-        return $this->belongsTo(Perro::class, 'perro_interesado');
+        return $this->belongsTo(Perro::class, 'perro_interesado_id');
     }
 
     // Relación para obtener el perro candidato en la interacción
     public function perroCandidato()
     {
-        return $this->belongsTo(Perro::class, 'perro_candidato');
+        return $this->belongsTo(Perro::class, 'perro_candidato_id');
     }
     
 }

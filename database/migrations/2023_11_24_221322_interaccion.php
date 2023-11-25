@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('interaccion', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('perro_interesado');
-            $table->unsignedBigInteger('perro_candidato');
-            $table->enum('preferencia', ['aceptado', 'rechazado']);
+            $table->unsignedBigInteger('perro_interesado_id');
+            $table->unsignedBigInteger('perro_candidato_id');
+            $table->enum('preferencia', ['A', 'R']);
             $table->timestamps();
 
-            $table->foreign('perro_interesado')->references('id')->on('perro');
-            $table->foreign('perro_candidato')->references('id')->on('perro');
+            $table->foreign('perro_interesado_id')->references('id')->on('perro');
+            $table->foreign('perro_candidato_id')->references('id')->on('perro');
         });
         //
     }

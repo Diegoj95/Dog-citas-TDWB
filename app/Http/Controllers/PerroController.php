@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\{PerroRequest};
+use App\Http\Requests\{PerroRequest, InteraccionRequest};
 use App\Repositories\PerroRepository;
 use Illuminate\Http\Request;
 
@@ -41,6 +41,10 @@ class PerroController extends Controller
 
    public function perrosCandidatos(Request $request){
       return $this->perroRepository->perrosCandidatos($request);
+   }
+
+   public function registrarInteraccion(InteraccionRequest $request){
+      return $this->perroRepository->registrarInteraccion($request);
    }
 
    

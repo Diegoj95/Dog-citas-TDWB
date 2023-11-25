@@ -18,12 +18,12 @@ class Perro extends Model
 
     public function interaccionesInteresado()
     {
-        return $this->hasMany(Interaccion::class, 'perro_interesado');
+        return $this->hasMany(Interaccion::class, 'perro_interesado_id');
     }
 
     public function interaccionesCandidato()
     {
-        return $this->hasMany(Interaccion::class, 'perro_candidato');
+        return $this->hasMany(Interaccion::class, 'perro_candidato_id');
     }
 
 }
