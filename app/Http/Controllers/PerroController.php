@@ -9,28 +9,33 @@ use Illuminate\Http\Request;
 
 class PerroController extends Controller
 {
-    protected PerroRepository $perroRepository;
 
-    public function __construct(perroRepository $perroRepository){
-        $this->perroRepository = $perroRepository;
-    }
-    
-    public function registrarPerro(PerroRequest $request){
-       return $this->perroRepository->registrarPerro($request);
-    }
+   protected PerroRepository $perroRepository;
 
-    public function actualizarPerro(PerroRequest $request){
-        return $this->perroRepository->actualizarPerro($request);
-     }
+   public function __construct(perroRepository $perroRepository){
+      $this->perroRepository = $perroRepository;
+   }
 
-     public function listarAllPerros(Request $request){
-        return $this->perroRepository->listarAllPerros($request);
-     }
-     public function listarUnPerro(Request $request){
-        return $this->perroRepository->listarUnPerro($request);
-     }
+   public function registrarPerro(PerroRequest $request){
+      return $this->perroRepository->registrarPerro($request);
+   }
 
-     public function EliminarPerro(PerroRequest $request){
-        return $this->perroRepository->eliminarPerro($request);
-     }
+   public function actualizarPerro(PerroRequest $request){
+      return $this->perroRepository->actualizarPerro($request);
+   }
+
+   public function listarAllPerros(Request $request){
+      return $this->perroRepository->listarAllPerros($request);
+   }
+   public function listarUnPerro(Request $request){
+      return $this->perroRepository->listarUnPerro($request);
+   }
+
+   public function EliminarPerro(PerroRequest $request){
+      return $this->perroRepository->eliminarPerro($request);
+   }
+
+   public function perroRandom(Request $request){
+      return $this->perroRepository->perroRandom($request);
+   }
 }
