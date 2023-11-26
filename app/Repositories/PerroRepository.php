@@ -212,6 +212,53 @@ class PerroRepository
         }
     }
 
+    public function listarPerrosAceptados($request)
+    {
+        try {
+            $perrosAceptados = Interaccion::where('perro_interesado_id', $request->id)
+                ->where('preferencia', 'A')
+                ->get();
 
+            return response()->json(["perrosAceptados" => $perrosAceptados], Response::HTTP_OK);
+        } catch (Exception $e) {
+            Log::info([
+                "error" => $e->getMessage(),
+                "linea" => $e->getLine(),
+                "file" => $e->getFile(),
+                "metodo" => __METHOD__
+            ]);
 
+            return response()->json([
+                "error" => $e->getMessage(),
+                "linea" => $e->getLine(),
+                "file" => $e->getFile(),
+                "metodo" => __METHOD__
+            ], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    public function listarPerrosRechazados($request)
+    {
+        try {
+            $perrosRechazados = Interaccion::where('perro_interesado_id', $request->id)
+                ->where('preferencia', 'R')
+                ->get();
+
+            return response()->json(["perrosRechazados" => $perrosRechazados], Response::HTTP_OK);
+        } catch (Exception $e) {
+            Log::info([
+                "error" => $e->getMessage(),
+                "linea" => $e->getLine(),
+                "file" => $e->getFile(),
+                "metodo" => __METHOD__
+            ]);
+
+            return response()->json([
+                "error" => $e->getMessage(),
+                "linea" => $e->getLine(),
+                "file" => $e->getFile(),
+                "metodo" => __METHOD__
+            ], Response::HTTP_BAD_REQUEST);
+        }
+    }
 }

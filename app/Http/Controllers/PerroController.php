@@ -47,5 +47,10 @@ class PerroController extends Controller
       return $this->perroRepository->registrarInteraccion($request);
    }
 
-   
+   public function listarPerrosAceptados(Request $request){
+      return $this->perroRepository->listarPerrosAceptados($request);
+   }
+   public function listarPerrosRechazados(Request $request){
+      return $this->perroRepository->listarPerrosRechazados($request);
+   }
 }

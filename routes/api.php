@@ -22,5 +22,7 @@ Route::get('listarUnPerro',[PerroController::class, 'listarUnPerro']);
 Route::get('perroRandom',[PerroController::class, 'perroRandom']);
 Route::get('perrosCandidatos',[PerroController::class, 'perrosCandidatos']);
 Route::post('registrarInteraccion', [PerroController::class, 'registrarInteraccion']);
+Route::get('listarPerrosAceptados', [PerroController::class, 'listarPerrosAceptados']);
+Route::get('listarPerrosRechazados', [PerroController::class, 'listarPerrosRechazados']);
 
 
