@@ -1,7 +1,7 @@
-Grupo 1:
+##Grupo 1:
 
-Diego Jimenez
-José Rodriguez Herrera
+* Diego Jiménez, ICINF
+* José Rodriguez, ICINF
 
-Comando para ejecutar el seeder:
+##Comando para ejecutar el seeder:
 php artisan db:seed --class=Database\\Seeders\\PerroSeeder
