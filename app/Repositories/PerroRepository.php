@@ -160,10 +160,22 @@ class PerroRepository
     {
         try {
             $interesadoId = $request->input('id');
+    
+            // Obtener los IDs de perros ya interactuados (aceptados o rechazados) por el usuario
+            $perrosInteractuados = Interaccion::where('perro_interesado_id', $interesadoId)
+                ->pluck('perro_candidato_id');
+    
+            // Seleccionar un perro candidato que no haya interactuado aún con el usuario
+            $perroCandidato = Perro::where('id', '!=', $interesadoId)
+                ->whereNotIn('id', $perrosInteractuados)
+                ->inRandomOrder()
+                ->first();
 
-            $perrosCandidatos = Perro::where('id', '!=', $interesadoId)->get();
-
-            return response()->json(["perrosCandidatos" => $perrosCandidatos], Response::HTTP_OK);
+            if (!$perroCandidato) {
+                return response()->json(["mensaje" => "No hay más perros candidatos"], Response::HTTP_OK);
+            }
+    
+            return response()->json(["perrosCandidatos" => $perroCandidato], Response::HTTP_OK);
         } catch (Exception $e) {
             Log::info([
                 "error" => $e->getMessage(),
@@ -171,7 +183,7 @@ class PerroRepository
                 "file" => $e->getFile(),
                 "metodo" => __METHOD__
             ]);
-
+    
             return response()->json([
                 "error" => $e->getMessage(),
                 "linea" => $e->getLine(),
@@ -180,28 +192,38 @@ class PerroRepository
             ], Response::HTTP_BAD_REQUEST);
         }
     }
+    
 
     public function registrarInteraccion($request)
     {
         try {
+            // Verificar si ya existe una interacción en el mismo orden para evitar duplicados
+            $interaccionDuplicada = Interaccion::where('perro_interesado_id', $request->perro_interesado_id)
+                ->where('perro_candidato_id', $request->perro_candidato_id)
+                ->first();
+    
+            if ($interaccionDuplicada) {
+                return response()->json(["mensaje" => "Interacción ya registrada"], Response::HTTP_CONFLICT);
+            }
+    
+            // Crear y guardar la nueva interacción
             $interaccion = new Interaccion();
             $interaccion->perro_interesado_id = $request->perro_interesado_id;
             $interaccion->perro_candidato_id = $request->perro_candidato_id;
             $interaccion->preferencia = $request->preferencia;
             $interaccion->save();
-
-            // Verificar si ya existe una interacción con las IDs invertidas
+    
+            // Verificar si ya existe una interacción con las IDs invertidas y preferencia 'A'
             $interaccionExistente = Interaccion::where('perro_interesado_id', $request->perro_candidato_id)
                 ->where('perro_candidato_id', $request->perro_interesado_id)
-                ->where('preferencia','A')
+                ->where('preferencia', 'A')
                 ->first();
-
+    
             if ($interaccionExistente) {
-                // Ya existe una interacción con las IDs invertidas, puedes manejarlo según tus necesidades.
-                return response()->json(["interaccion" => $interaccion,"mensaje" => "It's a MATCH!"], Response::HTTP_OK);
+                return response()->json(["interaccion" => $interaccion, "mensaje" => "hay match"], Response::HTTP_OK);
             }
-            
-            return response()->json(["interaccion" => $interaccion,"mensaje"=>"OK"], Response::HTTP_OK);
+    
+            return response()->json(["interaccion" => $interaccion, "mensaje" => "OK"], Response::HTTP_OK);
         } catch (Exception $e) {
             return response()->json([
                 "error" => $e->getMessage(),
@@ -211,6 +233,7 @@ class PerroRepository
             ], Response::HTTP_BAD_REQUEST);
         }
     }
+    
 
     public function listarPerrosAceptados($request)
     {
